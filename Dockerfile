@@ -20,7 +20,7 @@ RUN chmod +x /opt/render.sh && \
 
 # Configure lighttpd to serve /opt/www
 RUN mkdir -p /var/run/lighttpd && \
-    echo 'server.document-root = "/opt/www"\nserver.port = 8080\nserver.dir-listing = "enable"' > /etc/lighttpd/lighttpd.conf
+    echo 'server.document-root = "/opt/www"\nserver.port = 5000\nserver.dir-listing = "enable"' > /etc/lighttpd/lighttpd.conf
 
 # Run both cron and lighttpd
 CMD bash -c "service cron start && lighttpd -D -f /etc/lighttpd/lighttpd.conf"
