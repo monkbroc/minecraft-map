@@ -17,6 +17,7 @@ RUN mkdir -p /opt/www
 COPY render.sh /opt/render.sh
 COPY crontab /etc/cron.d/render-cron
 COPY lighttpd.conf /etc/lighttpd/lighttpd.conf
+COPY playernames.txt /opt/unmined-cli/config/playernames.txt
 
 RUN chmod +x /opt/render.sh && \
     chmod 0644 /etc/cron.d/render-cron && \
