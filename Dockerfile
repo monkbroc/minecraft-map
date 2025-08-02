@@ -10,17 +10,17 @@ RUN curl -L -o /tmp/unmined-cli.tgz "https://unmined.net/download/unmined-cli-li
     tar -xzf /tmp/unmined-cli.tgz -C /opt/unmined-cli --strip-components=1 && \
     rm /tmp/unmined-cli.tgz
 
+# Create render output directory
 RUN mkdir -p /opt/www
 
+# Add scripts and configs
 COPY render.sh /opt/render.sh
 COPY crontab /etc/cron.d/render-cron
+COPY lighttpd.conf /etc/lighttpd/lighttpd.conf
+
 RUN chmod +x /opt/render.sh && \
     chmod 0644 /etc/cron.d/render-cron && \
     crontab /etc/cron.d/render-cron
 
-# Configure lighttpd to serve /opt/www
-RUN mkdir -p /var/run/lighttpd && \
-    echo 'server.document-root = "/opt/www"\nserver.port = 5000\nserver.dir-listing = "enable"' > /etc/lighttpd/lighttpd.conf
-
 # Run both cron and lighttpd
-CMD bash -c "service cron start && lighttpd -D -f /etc/lighttpd/lighttpd.conf"
+CMD bash -c "/opt/render.sh && service cron start && lighttpd -D -f /etc/lighttpd/lighttpd.conf"
