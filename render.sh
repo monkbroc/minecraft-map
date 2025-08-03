@@ -15,6 +15,6 @@ mkdir -p "$OUTPUT_PATH"
 "$UNMINED" web render \
     --world="$WORLD_PATH" \
     --output="$OUTPUT_PATH" \
-    --players -c --zoomin -2
+    -c --zoomin -2
 
 echo "[$(date)] Map render complete"
